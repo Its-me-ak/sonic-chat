@@ -6,6 +6,7 @@ import {
   ResizablePanelGroup,
 } from "../ui/resizable";
 import { cn } from "@/lib/utils";
+import Sidebar from "../Sidebar";
 
 interface ChatLayoutProps {
   initialLayout: number[] | undefined;
@@ -52,9 +53,9 @@ const ChatLayout = ({ initialLayout = [320, 480] }: ChatLayoutProps) => {
             setIsCollapsed(false);
             document.cookie = `react-resizable-panels:collapsed=false`;
         }}  
-        className={cn(isCollapsed && "min-w-[80px] transition-all duration-300 ease-in-out")}
+        className={cn(isCollapsed && "min-w-[60px] transition-all duration-300 ease-in-out")}
         >
-        Sidebar
+        <Sidebar isCollapsed={isCollapsed} />
       </ResizablePanel>
       <ResizableHandle withHandle />
       <ResizablePanel

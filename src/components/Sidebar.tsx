@@ -1,0 +1,87 @@
+import { USERS } from "@/db/dummy";
+import React from "react";
+import { ScrollArea } from "./ui/scroll-area";
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipProvider,
+  TooltipTrigger,
+} from "./ui/tooltip";
+import { Avatar, AvatarFallback, AvatarImage } from "./ui/avatar";
+import { Button } from "./ui/button";
+import { cn } from "@/lib/utils";
+
+interface SidebarProps {
+  isCollapsed: boolean;
+}
+const Sidebar = ({ isCollapsed }: SidebarProps) => {
+  const selectedUser = USERS[0];
+  return (
+    <div className="group relative flex flex-col h-full gap-4 p-2 data-[collapsed=true]:p-2 max-h-full overflow-auto bg-background">
+      {!isCollapsed && (
+        <div className="flex justify-center items-center p-2">
+          <div className="flex items-center gap-2 text-2xl">
+            <p className="font-medium">Chats</p>
+          </div>
+        </div>
+      )}
+      <ScrollArea className="gap-2 px-2 group-[[data-collapsed=true]]:justify-center group-[[data-collapsed=true]]:px-2">
+        {USERS.map((user) =>
+          isCollapsed ? (
+            <TooltipProvider key={user.id}>
+              <Tooltip delayDuration={0}>
+                <TooltipTrigger asChild>
+                  <div>
+                    <Avatar className="flex justify-center items-center my-1 w-11 h-11">
+                      <AvatarImage
+                        src={user.image || "/user-placeholder.png"}
+                        alt="User Profile"
+                        className="border-1 border-white rounded-full w-10 h-10"
+                      />
+                      <AvatarFallback>{user.name[0]}</AvatarFallback>
+                    </Avatar>
+                    <span className="sr-only">{user.name}</span>
+                  </div>
+                </TooltipTrigger>
+                <TooltipContent
+                  side="right"
+                  className="flex items-center gap-4"
+                >
+                  {user.name}
+                </TooltipContent>
+              </Tooltip>
+            </TooltipProvider>
+          ) : (
+            <Button
+              key={user.id}
+              variant={"grey"}
+              size={"xl"}
+              className={cn(
+                "w-full justify-start gap-3 my-1",
+                selectedUser.email === user.email &&
+                  "dark:bg-muted dark:text-white dark:hover:bg-muted dark:hover:text-white shrink"
+              )}
+            >
+              <Avatar className="flex justify-center items-center my-1 h-11 w-11"
+              >
+                <AvatarImage
+                  src={user.image || "/user-placeholder.png"}
+                  alt="User Profile"
+                  className="w-10 h-10"
+                />
+                <AvatarFallback>{user.name[0]}</AvatarFallback>
+              </Avatar> 
+              <div className="flex flex-col max-w-28">
+                <span>
+                    {user.name}
+                </span>
+              </div>
+            </Button>
+          )
+        )}
+      </ScrollArea>
+    </div>
+  );
+};
+
+export default Sidebar;
