@@ -18,7 +18,7 @@ interface SidebarProps {
 const Sidebar = ({ isCollapsed }: SidebarProps) => {
   const selectedUser = USERS[0];
   return (
-    <div className="group relative flex flex-col h-full gap-4 p-2 data-[collapsed=true]:p-2 max-h-full overflow-auto bg-background items-center">
+    <div className={`group relative flex flex-col h-full gap-4 p-2 data-[collapsed=true]:p-2 max-h-full overflow-auto bg-background ${isCollapsed && "items-center"}`}>
       {!isCollapsed && (
         <div className="flex justify-center items-center p-2">
           <div className="flex items-center gap-2 text-2xl">
