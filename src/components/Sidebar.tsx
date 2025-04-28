@@ -10,6 +10,7 @@ import {
 import { Avatar, AvatarFallback, AvatarImage } from "./ui/avatar";
 import { Button } from "./ui/button";
 import { cn } from "@/lib/utils";
+import { LogOut } from "lucide-react";
 
 interface SidebarProps {
   isCollapsed: boolean;
@@ -17,7 +18,7 @@ interface SidebarProps {
 const Sidebar = ({ isCollapsed }: SidebarProps) => {
   const selectedUser = USERS[0];
   return (
-    <div className="group relative flex flex-col h-full gap-4 p-2 data-[collapsed=true]:p-2 max-h-full overflow-auto bg-background">
+    <div className="group relative flex flex-col h-full gap-4 p-2 data-[collapsed=true]:p-2 max-h-full overflow-auto bg-background items-center">
       {!isCollapsed && (
         <div className="flex justify-center items-center p-2">
           <div className="flex items-center gap-2 text-2xl">
@@ -62,7 +63,7 @@ const Sidebar = ({ isCollapsed }: SidebarProps) => {
                   "dark:bg-muted dark:text-white dark:hover:bg-muted dark:hover:text-white shrink"
               )}
             >
-              <Avatar className="flex justify-center items-center my-1 h-11 w-11"
+              <Avatar className="flex justify-center items-center my-1 h-10 w-10"
               >
                 <AvatarImage
                   src={user.image || "/user-placeholder.png"}
@@ -80,6 +81,29 @@ const Sidebar = ({ isCollapsed }: SidebarProps) => {
           )
         )}
       </ScrollArea>
+      {/* Logout section */}
+      <div className="mt-auto">
+        <div className="flex justify-between items-center gap-2 md:px-4 py-2">
+            {
+                !isCollapsed && (
+                    <div className="hidden md:flex gap-2 items-center">
+                        <Avatar className="flex items-center justify-center">
+                            <AvatarImage
+                                src={"/user-placeholder.png"}
+                                alt="Avatar Image"
+                                referrerPolicy="no-referrer"
+                                className="w-8 h-8 border-2 border-white rounded-full"
+                            />
+                        </Avatar>
+                        <p className="font-bold">Akib Khan</p>
+                    </div>
+                )
+            }
+            <div className="flex">
+                <LogOut size={22} cursor={"pointer"}/>
+            </div>
+        </div>
+      </div>
     </div>
   );
 };
