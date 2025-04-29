@@ -13,14 +13,15 @@ import { cn } from "@/lib/utils";
 import { LogOut } from "lucide-react";
 import { usePreferences } from "@/store/usePreferences";
 import useSound from "use-sound";
+import { LogoutLink } from "@kinde-oss/kinde-auth-nextjs/components";
 
 interface SidebarProps {
   isCollapsed: boolean;
 }
 const Sidebar = ({ isCollapsed }: SidebarProps) => {
   const selectedUser = USERS[0];
-  const {soundEnabled} = usePreferences()
-  const [playMouseClick] = useSound("/sounds/mouse-click.mp3", {volume: 0.1});
+  const { soundEnabled } = usePreferences();
+  const [playMouseClick] = useSound("/sounds/mouse-click.mp3", { volume: 0.1 });
 
   return (
     <div
@@ -111,7 +112,9 @@ const Sidebar = ({ isCollapsed }: SidebarProps) => {
             </div>
           )}
           <div className="flex">
-            <LogOut size={22} cursor={"pointer"} />
+            <LogoutLink >
+              <LogOut size={22} cursor={"pointer"} />
+            </LogoutLink>
           </div>
         </div>
       </div>

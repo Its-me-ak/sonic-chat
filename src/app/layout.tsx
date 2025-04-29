@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import { ThemeProvider } from "@/components/providers/ThemeProvider";
+import TanStaackProvider from "@/components/providers/TanStackProvider";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -19,7 +20,6 @@ export const metadata: Metadata = {
     "Sonic Chat is a high-performance, real-time chat application built with Next.js, TypeScript, and Redis. Experience seamless messaging with lightning-fast speed and reliability.",
 };
 
-
 export default function RootLayout({
   children,
 }: Readonly<{
@@ -34,10 +34,9 @@ export default function RootLayout({
           enableSystem
           disableTransitionOnChange
         >
-          {children}
+          <TanStaackProvider>{children}</TanStaackProvider>
         </ThemeProvider>
       </body>
     </html>
   );
 }
-
