@@ -15,6 +15,7 @@ import { usePreferences } from "@/store/usePreferences";
 import useSound from "use-sound";
 import { LogoutLink } from "@kinde-oss/kinde-auth-nextjs/components";
 import { useSelectedUsers } from "@/store/useSelectedUsers";
+import { useKindeBrowserClient } from "@kinde-oss/kinde-auth-nextjs";
 
 interface SidebarProps {
   isCollapsed: boolean;
@@ -24,6 +25,7 @@ const Sidebar = ({ isCollapsed, users }: SidebarProps) => {
   const {selectedUser, setSelectedUser} = useSelectedUsers()
   const { soundEnabled } = usePreferences();
   const [playMouseClick] = useSound("/sounds/mouse-click.mp3", { volume: 0.1 });
+ const {user} =  useKindeBrowserClient()
 
   return (
     <div
@@ -106,13 +108,13 @@ const Sidebar = ({ isCollapsed, users }: SidebarProps) => {
             <div className="hidden md:flex gap-2 items-center">
               <Avatar className="flex items-center justify-center">
                 <AvatarImage
-                  src={"/user-placeholder.png"}
+                  src={user?.picture || "/user-placeholder.png"}
                   alt="Avatar Image"
                   referrerPolicy="no-referrer"
                   className="w-8 h-8 border-2 border-white rounded-full"
                 />
               </Avatar>
-              <p className="font-bold">Akib Khan</p>
+              <p className="font-bold">{`${user?.given_name} ${user?.family_name}`}</p>
             </div>
           )}
           <div className="flex">

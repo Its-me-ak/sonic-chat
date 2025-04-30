@@ -4,7 +4,7 @@ import { Info, X } from "lucide-react";
 import { useSelectedUsers } from "@/store/useSelectedUsers";
 
 const ChatHeader = () => {
-  const { selectedUser } = useSelectedUsers();
+  const { selectedUser, setSelectedUser } = useSelectedUsers();
   return (
     <div className="w-full h-16 flex justify-between items-center p-4 border-b">
       <div className="flex gap-2 items-center">
@@ -26,6 +26,7 @@ const ChatHeader = () => {
         <X
           className="text-muted-foreground cursor-pointer hover:text-primary"
           size={20}
+          onClick={() => setSelectedUser(null)}
         />
       </div>
     </div>
