@@ -8,11 +8,13 @@ import {
 import { cn } from "@/lib/utils";
 import Sidebar from "../Sidebar";
 import MessageContainer from "./MessageContainer";
+import { User } from "@/db/dummy";
 
 interface ChatLayoutProps {
   initialLayout: number[] | undefined;
+  users: User[]
 }
-const ChatLayout = ({ initialLayout = [320, 480] }: ChatLayoutProps) => {
+const ChatLayout = ({ initialLayout = [320, 480], users }: ChatLayoutProps) => {
   const [ isCollapsed, setIsCollapsed ] = useState(false);
   const [ isMobile, setIsMobile ] = useState(false);
 
@@ -56,7 +58,7 @@ const ChatLayout = ({ initialLayout = [320, 480] }: ChatLayoutProps) => {
         }}  
         className={cn(isCollapsed && "min-w-[60px] transition-all duration-300 ease-in-out")}
         >
-        <Sidebar isCollapsed={isCollapsed} />
+        <Sidebar isCollapsed={isCollapsed} users={users} />
       </ResizablePanel>
       <ResizableHandle withHandle />
       <ResizablePanel

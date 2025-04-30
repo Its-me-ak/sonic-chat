@@ -34,6 +34,7 @@ export default function RootLayout({
           enableSystem
           disableTransitionOnChange
         >
+
           <TanStaackProvider>{children}</TanStaackProvider>
         </ThemeProvider>
       </body>

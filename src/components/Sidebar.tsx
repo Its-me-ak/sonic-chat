@@ -1,4 +1,4 @@
-import { USERS } from "@/db/dummy";
+import { User, USERS } from "@/db/dummy";
 import React from "react";
 import { ScrollArea } from "./ui/scroll-area";
 import {
@@ -17,8 +17,9 @@ import { LogoutLink } from "@kinde-oss/kinde-auth-nextjs/components";
 
 interface SidebarProps {
   isCollapsed: boolean;
+  users: User[]
 }
-const Sidebar = ({ isCollapsed }: SidebarProps) => {
+const Sidebar = ({ isCollapsed, users }: SidebarProps) => {
   const selectedUser = USERS[0];
   const { soundEnabled } = usePreferences();
   const [playMouseClick] = useSound("/sounds/mouse-click.mp3", { volume: 0.1 });
@@ -37,7 +38,7 @@ const Sidebar = ({ isCollapsed }: SidebarProps) => {
         </div>
       )}
       <ScrollArea className="gap-2 px-2 group-[[data-collapsed=true]]:justify-center group-[[data-collapsed=true]]:px-2">
-        {USERS.map((user) =>
+        {users.map((user) =>
           isCollapsed ? (
             <TooltipProvider key={user.id}>
               <Tooltip delayDuration={0}>
