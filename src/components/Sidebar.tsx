@@ -1,4 +1,4 @@
-import { User, USERS } from "@/db/dummy";
+import { User } from "@/db/dummy";
 import React from "react";
 import { ScrollArea } from "./ui/scroll-area";
 import {
@@ -14,13 +14,14 @@ import { LogOut } from "lucide-react";
 import { usePreferences } from "@/store/usePreferences";
 import useSound from "use-sound";
 import { LogoutLink } from "@kinde-oss/kinde-auth-nextjs/components";
+import { useSelectedUsers } from "@/store/useSelectedUsers";
 
 interface SidebarProps {
   isCollapsed: boolean;
   users: User[]
 }
 const Sidebar = ({ isCollapsed, users }: SidebarProps) => {
-  const selectedUser = USERS[0];
+  const {selectedUser, setSelectedUser} = useSelectedUsers()
   const { soundEnabled } = usePreferences();
   const [playMouseClick] = useSound("/sounds/mouse-click.mp3", { volume: 0.1 });
 
@@ -46,6 +47,7 @@ const Sidebar = ({ isCollapsed, users }: SidebarProps) => {
                   <div
                     onClick={() => {
                       soundEnabled && playMouseClick();
+                      setSelectedUser(user);
                     }}
                   >
                     <Avatar className="flex justify-center items-center my-1 w-11 h-11">
@@ -74,11 +76,12 @@ const Sidebar = ({ isCollapsed, users }: SidebarProps) => {
               size={"xl"}
               className={cn(
                 "w-full justify-start gap-3 my-1",
-                selectedUser.email === user.email &&
+                selectedUser?.email === user.email &&
                   "dark:bg-muted dark:text-white dark:hover:bg-muted dark:hover:text-white shrink"
               )}
               onClick={() => {
                 soundEnabled && playMouseClick();
+                setSelectedUser(user);
               }}
             >
               <Avatar className="flex justify-center items-center my-1 h-10 w-10">

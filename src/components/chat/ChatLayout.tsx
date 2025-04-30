@@ -9,19 +9,21 @@ import { cn } from "@/lib/utils";
 import Sidebar from "../Sidebar";
 import MessageContainer from "./MessageContainer";
 import { User } from "@/db/dummy";
+import { useSelectedUsers } from "@/store/useSelectedUsers";
 
 interface ChatLayoutProps {
   initialLayout: number[] | undefined;
-  users: User[]
+  users: User[];
 }
 const ChatLayout = ({ initialLayout = [320, 480], users }: ChatLayoutProps) => {
-  const [ isCollapsed, setIsCollapsed ] = useState(false);
-  const [ isMobile, setIsMobile ] = useState(false);
+  const [isCollapsed, setIsCollapsed] = useState(false);
+  const [isMobile, setIsMobile] = useState(false);
 
+  const { selectedUser } = useSelectedUsers();
   useEffect(() => {
     const checkScreenSize = () => {
-        setIsMobile(window.innerWidth < 768);
-    }
+      setIsMobile(window.innerWidth < 768);
+    };
     checkScreenSize();
 
     window.addEventListener("resize", checkScreenSize);
@@ -29,7 +31,6 @@ const ChatLayout = ({ initialLayout = [320, 480], users }: ChatLayoutProps) => {
     return () => {
       window.removeEventListener("resize", checkScreenSize);
     };
-
   }, [setIsMobile]);
 
   return (
@@ -47,34 +48,40 @@ const ChatLayout = ({ initialLayout = [320, 480], users }: ChatLayoutProps) => {
         collapsedSize={8}
         collapsible={true}
         minSize={isMobile ? 0 : 24}
-        maxSize={isMobile ? 8 : 30}   
+        maxSize={isMobile ? 8 : 30}
         onCollapse={() => {
-            setIsCollapsed(true);
-            document.cookie = `react-resizable-panels:collapsed=true`;
-        }} 
+          setIsCollapsed(true);
+          document.cookie = `react-resizable-panels:collapsed=true`;
+        }}
         onExpand={() => {
-            setIsCollapsed(false);
-            document.cookie = `react-resizable-panels:collapsed=false`;
-        }}  
-        className={cn(isCollapsed && "min-w-[60px] transition-all duration-300 ease-in-out")}
-        >
+          setIsCollapsed(false);
+          document.cookie = `react-resizable-panels:collapsed=false`;
+        }}
+        className={cn(
+          isCollapsed && "min-w-[60px] transition-all duration-300 ease-in-out"
+        )}
+      >
         <Sidebar isCollapsed={isCollapsed} users={users} />
       </ResizablePanel>
       <ResizableHandle withHandle />
-      <ResizablePanel
-        defaultSize={initialLayout[1]}
-        minSize={30}
-      >
-        {/* <div className="flex justify-center items-center h-full w-full px-10">
+      <ResizablePanel defaultSize={initialLayout[1]} minSize={30}>
+        {selectedUser ? (
+          <MessageContainer />
+        ) : (
+          <div className="flex justify-center items-center h-full w-full px-10">
             <div className="flex flex-col justify-center items-center gap-4">
-                <img src="/logo.png" alt="Logo" className="w-full md:w-2/3 lg:w-1/2" />
-                <p className="text-muted-foreground text-center">
-                    Click on a chat to view the messages
-                </p>
+              <img
+                src="/logo.png"
+                alt="Logo"
+                className="w-full md:w-2/3 lg:w-1/2"
+              />
+              <p className="text-muted-foreground text-center">
+                Click on a chat to view the messages
+              </p>
             </div>
-        </div> */}
-        <MessageContainer/>
-        </ResizablePanel>
+          </div>
+        )}
+      </ResizablePanel>
     </ResizablePanelGroup>
   );
 };
