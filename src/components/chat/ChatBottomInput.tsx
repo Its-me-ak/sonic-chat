@@ -12,24 +12,52 @@ import EmojiPicker from "./EmojiPicker";
 import { Button } from "../ui/button";
 import useSound from "use-sound";
 import { usePreferences } from "@/store/usePreferences";
+import { useMutation } from "@tanstack/react-query";
+import { sendMessageAction } from "@/action/message.actions";
+import { useSelectedUsers } from "@/store/useSelectedUsers";
 
 const ChatBottomInput = () => {
-  const {soundEnabled} = usePreferences()
+  const { soundEnabled } = usePreferences();
   const [message, setMessage] = useState("");
   const inputRef = useRef<HTMLTextAreaElement>(null);
-  const isPending = false;
-  const [keySound1] = useSound("/sounds/keystroke1.mp3")
+  const [keySound1] = useSound("/sounds/keystroke1.mp3");
   const [keySound2] = useSound("/sounds/keystroke2.mp3");
   const [keySound3] = useSound("/sounds/keystroke3.mp3");
   const [keySound4] = useSound("/sounds/keystroke4.mp3");
-
   const playKeyboardSound = [keySound1, keySound2, keySound3, keySound4];
-
   const playRandomKeySounds = () => {
-    const randomSound = Math.floor(Math.random() * playKeyboardSound.length)
-    soundEnabled && playKeyboardSound[randomSound]()
-  }
+    const randomSound = Math.floor(Math.random() * playKeyboardSound.length);
+    soundEnabled && playKeyboardSound[randomSound]();
+  };
 
+  const { selectedUser } = useSelectedUsers();
+
+  const { mutate: sendMessage, isPending } = useMutation({
+    mutationFn: sendMessageAction,
+  });
+
+  const handleSendMessage = () => {
+    if (!message.trim()) return;
+    sendMessage({
+      content: message,
+      messageType: "text",
+      receiverId: selectedUser?.id!,
+    });
+    setMessage("");
+    if (inputRef.current) {
+      inputRef.current.focus();
+    }
+  };
+
+  // send message with enter key and if enter key with shift key pressed then add new line
+  const handleKeyDown = (e: React.KeyboardEvent<HTMLTextAreaElement>) => {
+    if (e.key === "Enter" && !e.shiftKey) {
+      e.preventDefault();
+      handleSendMessage();
+    } else if (e.key === "Enter" && e.shiftKey) {
+      setMessage(message + "\n");
+    }
+  };
 
   return (
     <div className="flex justify-between items-center w-full p-2 gap-2">
@@ -58,9 +86,10 @@ const ChatBottomInput = () => {
             rows={1}
             className="flex items-center w-full rounded-full border h-9 resize-none overflow-hidden bg-background min-h-0"
             value={message}
+            onKeyDown={handleKeyDown}
             onChange={(e) => {
               setMessage(e.target.value);
-              playRandomKeySounds()
+              playRandomKeySounds();
             }}
             ref={inputRef}
           />
@@ -81,6 +110,7 @@ const ChatBottomInput = () => {
             className="h-9 w-9 dark:bg-muted dark:text-muted-foreground dark:hover:bg-muted dark:hover:text-white shrink-0"
             variant={"ghost"}
             size={"icon"}
+            onClick={handleSendMessage}
           >
             <SendHorizonalIcon size={20} />
           </Button>
@@ -90,8 +120,21 @@ const ChatBottomInput = () => {
             className="h-9 w-9 dark:bg-muted dark:text-muted-foreground dark:hover:bg-muted dark:hover:text-white shrink-0"
             variant={"ghost"}
             size={"icon"}
+            onClick={() =>
+              sendMessage({
+                content: "👍",
+                messageType: "text",
+                receiverId: selectedUser?.id!,
+              })
+            }
+            disabled={isPending}
           >
-            {!isPending && <ThumbsUp size={20} />}
+            {!isPending && (
+              <ThumbsUp
+                size={20}
+                className="text-muted-foreground"
+              />
+            )}
             {isPending && <Loader size={20} className="animate-spin" />}
           </Button>
         )}
