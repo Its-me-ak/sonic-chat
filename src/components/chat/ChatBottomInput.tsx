@@ -86,7 +86,13 @@ const ChatBottomInput = () => {
         </CldUploadWidget>
       )}
 
-      <Dialog open={!!imageUrl}>
+      <Dialog open={!!imageUrl}
+        onOpenChange={(open) => {
+          if (!open) {
+            setImageUrl("");
+          }
+        }}
+      >
         <DialogContent>
           <DialogHeader>
             <DialogTitle>Image Preview</DialogTitle>
