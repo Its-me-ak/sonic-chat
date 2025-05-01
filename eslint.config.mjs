@@ -18,6 +18,7 @@ const eslintConfig = [
       "@next/next/no-img-element": "off",
       "no-unused-expressions": "off",
       "@typescript-eslint/no-unused-expressions": "off",
+      "@typescript-eslint/no-non-null-asserted-optional-chain": "off",
       "@typescript-eslint/no-unused-vars": "off",
       "no-var": "off"
 
