@@ -34,9 +34,9 @@ const MessageBody = () => {
     <div ref={messagesRef} className="flex flex-col w-full h-full overflow-x-hidden overflow-y-auto">
       <AnimatePresence>
         {!isMessagesLoading &&
-          messages?.map((message) => (
+          messages?.map((message, idx) => (
             <motion.div
-              key={message.id}
+              key={idx}
               layout
               initial={{ opacity: 0, scale: 1, y: 50, x: 0 }}
               animate={{ opacity: 1, scale: 1, y: 0, x: 0 }}
