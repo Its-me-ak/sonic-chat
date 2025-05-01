@@ -15,10 +15,13 @@ import { usePreferences } from "@/store/usePreferences";
 import { useMutation } from "@tanstack/react-query";
 import { sendMessageAction } from "@/action/message.actions";
 import { useSelectedUsers } from "@/store/useSelectedUsers";
+import { CldUploadWidget, CloudinaryUploadWidgetInfo } from "next-cloudinary";
+import { Dialog, DialogContent, DialogFooter, DialogHeader, DialogTitle } from "../ui/dialog";
 
 const ChatBottomInput = () => {
   const { soundEnabled } = usePreferences();
   const [message, setMessage] = useState("");
+  const [imageUrl, setImageUrl] = useState("");
   const inputRef = useRef<HTMLTextAreaElement>(null);
   const [keySound1] = useSound("/sounds/keystroke1.mp3");
   const [keySound2] = useSound("/sounds/keystroke2.mp3");
@@ -62,8 +65,61 @@ const ChatBottomInput = () => {
   return (
     <div className="flex justify-between items-center w-full p-2 gap-2">
       {!message.trim() && (
-        <ImageIcon size={20} className="cursor-pointer text-muted-foreground" />
+        <CldUploadWidget
+          signatureEndpoint={`/api/sign-cloudinary-params`}
+          onSuccess={(result, widget) => {
+            setImageUrl((result.info as CloudinaryUploadWidgetInfo).secure_url);
+            widget.close();
+          }}
+        >
+          {({ open }) => {
+            return (
+              <ImageIcon
+                size={20}
+                className="cursor-pointer text-muted-foreground"
+                onClick={() => {
+                  open();
+                }}
+              />
+            );
+          }}
+        </CldUploadWidget>
       )}
+
+      <Dialog open={!!imageUrl}>
+        <DialogContent>
+          <DialogHeader>
+            <DialogTitle>Image Preview</DialogTitle>
+          </DialogHeader>
+          <div className="flex justify-center items-center relative h-96 w-full mx-auto">
+            <Image
+            src={imageUrl}
+            alt="Image Upload"
+            fill
+            className="object-contain"
+            />
+          </div>
+          <DialogFooter>
+            <Button
+            type="submit"
+            onClick={() => {
+              sendMessage({
+                content: imageUrl,
+                messageType: "image",
+                receiverId: selectedUser?.id!,
+              });
+              setImageUrl("");
+              if (inputRef.current) {
+                inputRef.current.focus();
+              }
+            }}
+            >
+              Send
+            </Button>
+          </DialogFooter>
+        </DialogContent>
+      </Dialog>
+
       <AnimatePresence>
         <motion.div
           key={"input"}
@@ -130,10 +186,7 @@ const ChatBottomInput = () => {
             disabled={isPending}
           >
             {!isPending && (
-              <ThumbsUp
-                size={20}
-                className="text-muted-foreground"
-              />
+              <ThumbsUp size={20} className="text-muted-foreground" />
             )}
             {isPending && <Loader size={20} className="animate-spin" />}
           </Button>
