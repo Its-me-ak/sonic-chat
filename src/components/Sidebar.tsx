@@ -19,13 +19,13 @@ import { useKindeBrowserClient } from "@kinde-oss/kinde-auth-nextjs";
 
 interface SidebarProps {
   isCollapsed: boolean;
-  users: User[]
+  users: User[];
 }
 const Sidebar = ({ isCollapsed, users }: SidebarProps) => {
-  const {selectedUser, setSelectedUser} = useSelectedUsers()
+  const { selectedUser, setSelectedUser } = useSelectedUsers();
   const { soundEnabled } = usePreferences();
   const [playMouseClick] = useSound("/sounds/mouse-click.mp3", { volume: 0.1 });
- const {user} =  useKindeBrowserClient()
+  const { user } = useKindeBrowserClient();
 
   return (
     <div
@@ -104,7 +104,7 @@ const Sidebar = ({ isCollapsed, users }: SidebarProps) => {
       {/* Logout section */}
       <div className="mt-auto">
         <div className="flex justify-between items-center gap-2 md:px-4 py-2">
-          {!isCollapsed && (
+          {!isCollapsed && user?.given_name && user?.family_name && (
             <div className="hidden md:flex gap-2 items-center">
               <Avatar className="flex items-center justify-center">
                 <AvatarImage
@@ -118,7 +118,7 @@ const Sidebar = ({ isCollapsed, users }: SidebarProps) => {
             </div>
           )}
           <div className="flex">
-            <LogoutLink >
+            <LogoutLink>
               <LogOut size={22} cursor={"pointer"} />
             </LogoutLink>
           </div>
