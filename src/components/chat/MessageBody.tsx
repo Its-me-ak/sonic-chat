@@ -9,7 +9,7 @@ import { getMessages } from "@/action/message.actions";
 import MessageSkeleton from "../skeletons/MessageSkeleton";
 
 const MessageBody = () => {
-  const messagesRef = useRef<HTMLDivElement>(null)
+  const messagesRef = useRef<HTMLDivElement>(null);
   const { selectedUser } = useSelectedUsers();
   const { user: currentUser, isLoading: isUserLoading } =
     useKindeBrowserClient();
@@ -28,10 +28,13 @@ const MessageBody = () => {
     if (messagesRef.current) {
       messagesRef.current.scrollTop = messagesRef.current.scrollHeight;
     }
-  }, [messages])
+  }, [messages]);
 
   return (
-    <div ref={messagesRef} className="flex flex-col w-full h-full overflow-x-hidden overflow-y-auto">
+    <div
+      ref={messagesRef}
+      className="flex flex-col w-full h-full overflow-x-hidden overflow-y-auto"
+    >
       <AnimatePresence>
         {!isMessagesLoading &&
           messages?.map((message, idx) => (
@@ -60,7 +63,7 @@ const MessageBody = () => {
                   : "items-start"
               )}
             >
-              <div className="flex gap-2.5 items-center">
+              <div className="flex gap-2.5 items-start">
                 {message.senderId === selectedUser?.id && (
                   <Avatar className="flex justify-center items-center">
                     <AvatarImage
@@ -70,17 +73,32 @@ const MessageBody = () => {
                     />
                   </Avatar>
                 )}
-                {message.messageType === "text" ? (
-                  <span className="bg-accent p-2 rounded-md max-w-xs">
-                    {message.content}
+                <div
+                  className={`flex flex-col gap-1 ${
+                    message.senderId === currentUser?.id ? "items-end" : ""
+                  }`}
+                >
+                  {message.messageType === "text" ? (
+                    <span className="bg-accent p-2 rounded-md max-w-xs">
+                      {message.content}
+                    </span>
+                  ) : (
+                    <img
+                      src={message.content}
+                      alt="Message Image"
+                      className="border p-2 rounded h-40 md:h-52 object-cover"
+                    />
+                  )}
+                  <span className="text-xs text-muted-foreground">
+                    {new Date(Number(message?.timestamp)).toLocaleTimeString(
+                      [],
+                      {
+                        hour: "2-digit",
+                        minute: "2-digit",
+                      }
+                    )}
                   </span>
-                ) : (
-                  <img
-                    src={message.content}
-                    alt="Message Image"
-                    className="border p-2 rounded h-40 md:h-52 object-cover"
-                  />
-                )}
+                </div>
                 {message.senderId === currentUser?.id && (
                   <Avatar className="flex justify-center items-center">
                     <AvatarImage
