@@ -8,7 +8,7 @@ import {
 import { cn } from "@/lib/utils";
 import Sidebar from "../Sidebar";
 import MessageContainer from "./MessageContainer";
-import { User } from "@/db/dummy";
+import { User } from "@/types/types";
 import { useSelectedUsers } from "@/store/useSelectedUsers";
 
 interface ChatLayoutProps {

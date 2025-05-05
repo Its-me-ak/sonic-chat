@@ -1,4 +1,4 @@
-import { User } from "@/db/dummy";
+import { User } from "@/types/types";
 import React from "react";
 import { ScrollArea } from "./ui/scroll-area";
 import {

@@ -9,11 +9,6 @@ import React, { useState } from "react";
 const AuthButton = () => {
   const [isLoading, setIsLoading] = useState(false);
 
-
-
-  
-
-
   return (
     <div className="flex gap-3 flex-1 md:flex-row flex-col relative z-50">
       <RegisterLink className="flex-1" onClick={() => setIsLoading(true)}>

@@ -25,7 +25,7 @@ import {
 } from "../ui/dialog";
 import { useKindeBrowserClient } from "@kinde-oss/kinde-auth-nextjs";
 import { pusherClient } from "@/lib/pusher";
-import { Message } from "@/db/dummy";
+import { Message } from "@/types/types";
 
 const ChatBottomInput = () => {
   const { soundEnabled } = usePreferences();
