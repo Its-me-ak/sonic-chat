@@ -39,6 +39,9 @@ const ChatBottomInput = () => {
   const [playNotificationSound] = useSound("/sounds/notification.mp3", {
     volume: 0.2,
   });
+  const [playSentSound] = useSound("/sounds/send-message-sound.mp3", {
+    volume: 0.2,
+  });
   const playKeyboardSound = [keySound1, keySound2, keySound3, keySound4];
   const playRandomKeySounds = () => {
     const randomSound = Math.floor(Math.random() * playKeyboardSound.length);
@@ -59,6 +62,10 @@ const ChatBottomInput = () => {
       messageType: "text",
       receiverId: selectedUser?.id!,
     });
+
+    if (soundEnabled) {
+      playSentSound();
+    }
     setMessage("");
     if (inputRef.current) {
       inputRef.current.focus();
@@ -164,6 +171,9 @@ const ChatBottomInput = () => {
                   messageType: "image",
                   receiverId: selectedUser?.id!,
                 });
+                if (soundEnabled) {
+                  playSentSound();
+                }
                 setImageUrl("");
                 if (inputRef.current) {
                   inputRef.current.focus();
