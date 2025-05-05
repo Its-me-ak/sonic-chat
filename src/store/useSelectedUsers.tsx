@@ -1,4 +1,4 @@
-import { User } from "@/db/dummy";
+import { User } from "@/types/types";
 import { create } from "zustand";
 
 type SelectedUserState = {
