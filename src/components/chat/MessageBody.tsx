@@ -7,6 +7,7 @@ import { useKindeBrowserClient } from "@kinde-oss/kinde-auth-nextjs";
 import { useQuery } from "@tanstack/react-query";
 import { getMessages } from "@/action/message.actions";
 import MessageSkeleton from "../skeletons/MessageSkeleton";
+import { Smile } from "lucide-react";
 
 const MessageBody = () => {
   const messagesRef = useRef<HTMLDivElement>(null);
@@ -111,6 +112,24 @@ const MessageBody = () => {
               </div>
             </motion.div>
           ))}
+
+        {!messages?.length && !isMessagesLoading && (
+          <div className="flex justify-center items-center h-full w-full px-10">
+            <div className="flex flex-col justify-center items-center gap-4">
+              <img
+                src="/sonic-logo.png"
+                alt="Logo"
+                className="w-full md:w-2/3 lg:w-1/2"
+              />
+              <p className="text-muted-foreground text-center flex gap-1 items-center">
+                No messages yet with this user. Start a conversation
+                <span>
+                  <Smile size={18}/>
+                </span>
+              </p>
+            </div>
+          </div>
+        )}
         {isMessagesLoading && (
           <>
             <MessageSkeleton />

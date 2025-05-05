@@ -39,9 +39,10 @@ export async function sendMessageAction({
   }
 
   // Generate a unique message id
-  const messageId = `message:${Date.now()}:${Math.random()
-    .toString(36)
-    .substring(2, 9)}`;
+  // const messageId = `message:${Date.now()}:${Math.random()
+  //   .toString(36)
+  //   .substring(2, 9)}`;
+  const messageId = crypto.randomUUID();
   const timestamp = Date.now();
 
   // Create the message hash
@@ -64,6 +65,7 @@ export async function sendMessageAction({
 
   await pusherServer.trigger(channelName, "newMessage", {
     message: {
+      id: messageId,
       senderId,
       content,
       timestamp,
@@ -92,3 +94,4 @@ export async function getMessages(
   const messages = (await pipeline.exec()) as Message[];
   return messages;
 }
+

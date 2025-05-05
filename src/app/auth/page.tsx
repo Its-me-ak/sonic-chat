@@ -20,10 +20,10 @@ const Page = async () => {
         pointer-events-none select-none "
         />
 
-        <div className="flex flex-col gap-2 px-4 xl:ml-40 text-center md:text-start font-semibold">
+        <div className="flex flex-col gap-2 px-4 text-center md:text-start font-semibold">
           <Image
-            src={"/logo.png"}
-            alt="RediStash Logo"
+            src={"/sonic-logo.png"}
+            alt="Sonic Chat Logo"
             width={763}
             height={173}
             className="mt-20 w-[420px] z-0 pointer-events-none select-none"

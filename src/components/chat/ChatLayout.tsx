@@ -71,7 +71,7 @@ const ChatLayout = ({ initialLayout = [320, 480], users }: ChatLayoutProps) => {
           <div className="flex justify-center items-center h-full w-full px-10">
             <div className="flex flex-col justify-center items-center gap-4">
               <img
-                src="/logo.png"
+                src="/sonic-logo.png"
                 alt="Logo"
                 className="w-full md:w-2/3 lg:w-1/2"
               />
