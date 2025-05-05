@@ -1,5 +1,5 @@
 "use server";
-import { Message } from "@/db/dummy";
+import { Message } from "@/types/types";
 import { redis } from "@/lib/db";
 import { getKindeServerSession } from "@kinde-oss/kinde-auth-nextjs/server";
 import { pusherServer } from "@/lib/pusher";
