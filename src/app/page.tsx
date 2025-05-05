@@ -4,7 +4,7 @@ import { cookies } from "next/headers";
 import { redis } from "@/lib/db";
 import { getKindeServerSession } from "@kinde-oss/kinde-auth-nextjs/server";
 import { redirect } from "next/navigation";
-import { User } from "@/db/dummy";
+import { User } from "@/types/types";
 
 async function getUsers(): Promise<User[]> {
   const userKeys: string[] = [];
