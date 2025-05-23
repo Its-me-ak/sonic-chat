@@ -1,5 +1,5 @@
 ```markdown
-# Sonic Chat 💬
+# Sonic Chat ⚡️
 
 A real-time chat application built with Next.js, TypeScript, and Redis. Enjoy instant messaging and a smooth, responsive chatting experience.
 
@@ -8,17 +8,17 @@ A real-time chat application built with Next.js, TypeScript, and Redis. Enjoy in
 [![Open Issues](https://img.shields.io/github/issues/Its-me-ak/sonic-chat)](https://github.com/Its-me-ak/sonic-chat/issues)
 [![Last Updated](https://img.shields.io/github/last-commit/Its-me-ak/sonic-chat)](https://github.com/Its-me-ak/sonic-chat/commits/master)
 
-[**Visit the live demo!**](https://sonic-chat.vercel.app) 🚀
+**Visit the live demo!** [https://sonic-chat.vercel.app](https://sonic-chat.vercel.app) 🚀
 
 ## Description
 
 Sonic Chat is designed to provide a seamless and engaging real-time chat experience. Leveraging the power of Next.js for the frontend, TypeScript for type safety, and Redis for efficient data management, this application allows users to:
 
--   Sign in securely.
--   Send and receive messages instantly.
--   Enjoy a responsive and intuitive user interface.
+- Sign in securely.
+- Send and receive messages instantly.
+- Enjoy a responsive and intuitive user interface.
 
-## Tech Stack 💻
+## Tech Stack 🛠️
 
 *   [Next.js](https://nextjs.org/) - React framework for building performant web applications.
 *   [TypeScript](https://www.typescriptlang.org/) - Adds static typing to JavaScript.
@@ -50,12 +50,12 @@ Before you begin, ensure you have the following installed:
 2.  **Install dependencies:**
 
     ```bash
-    npm install # or yarn install or pnpm install or bun install
+    npm install  # or yarn install or pnpm install or bun install
     ```
 
 3.  **Set up environment variables:**
 
-    Create a `.env.local` file in the root directory and add the necessary environment variables.  Refer to the `.env.example` (if available) for the required variables.  At a minimum, you'll likely need:
+    Create a `.env.local` file in the root directory and add the necessary environment variables. Refer to the `.env.example` (if available) for the required variables. At a minimum, you'll likely need:
 
     ```
     NEXT_PUBLIC_KINDE_SITE_URL=YOUR_KINDE_SITE_URL
@@ -100,8 +100,4 @@ Contributions are welcome! Please follow these steps:
 ## Contributors 🧑‍💻
 
 *   [Its-me-ak](https://github.com/Its-me-ak)
-
-## License 📝
-
-License information is missing. Consider adding a license file to your repository.
 ```
