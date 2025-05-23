@@ -1,4 +1,3 @@
-```markdown
 # Sonic Chat ⚡️
 
 A real-time chat application built with Next.js, TypeScript, and Redis. Enjoy instant messaging and a smooth, responsive chatting experience.
